@@ -10,7 +10,7 @@ click-didyoumean==0.3.1
 click-plugins==1.1.1.2
 click-repl==0.3.0
 colorama==0.4.6
-Django==5.2.5
+Django==5.2.9
 google-api-core==2.25.1
 google-auth==2.40.3
 google-cloud-videointelligence==2.16.2
