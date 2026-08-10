@@ -1,0 +1,445 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AI Performance Center | Football Talent{% endblock %}
+
+{% block style %}
+<style>
+    /* --- AI TOOLS SPECIFIC STYLES --- */
+    .ai-hero {
+        background: linear-gradient(135deg, #2c0b55 0%, #06163F 100%);
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+    }
+
+    .ai-hero h1 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        font-style: italic;
+    }
+
+    .ai-container {
+        max-width: 1000px;
+        margin: -40px auto 60px;
+        padding: 0 20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .tool-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .tab-btn {
+        background: white;
+        color: var(--navy-blue);
+        border: none;
+        padding: 15px 25px;
+        font-weight: 700;
+        text-transform: uppercase;
+        cursor: pointer;
+        border-radius: 4px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .tab-btn.active {
+        background: var(--purple-main);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .tool-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        overflow: hidden;
+        display: none; /* Hidden by default */
+        border-top: 5px solid var(--purple-main);
+    }
+
+    .tool-card.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .tool-header {
+        padding: 30px;
+        border-bottom: 1px solid #eee;
+        background: #fdfdfd;
+    }
+
+    .tool-header h2 {
+        margin: 0;
+        color: var(--navy-blue);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .tool-body {
+        padding: 30px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .input-group {
+        margin-bottom: 20px;
+    }
+
+    .input-group label {
+        display: block;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+    }
+
+    .input-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: border 0.3s;
+    }
+
+    .input-control:focus {
+        border-color: var(--purple-main);
+        outline: none;
+    }
+
+    textarea.input-control {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    .btn-generate {
+        background: var(--purple-main);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-generate:hover {
+        background: var(--purple-dark);
+    }
+
+    .btn-generate:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+
+    /* Result Area */
+    .result-area {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 4px;
+        padding: 20px;
+        position: relative;
+    }
+
+    .result-header {
+        font-weight: 700;
+        color: var(--text-light);
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    .generated-content {
+        color: var(--text-dark);
+        line-height: 1.7;
+        white-space: pre-wrap; /* Preserves formatting */
+        min-height: 100px;
+    }
+
+    .loading-spinner {
+        display: none;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 768px) {
+        .tool-body { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="ai-hero">
+    <div class="container">
+        <h1>AI Performance Center</h1>
+        <p>Powered by Gemini ✨</p>
+    </div>
+</section>
+
+<div class="ai-container">
+
+    <!-- Navigation Tabs -->
+    <div class="tool-tabs">
+        <button class="tab-btn active" onclick="switchTool('bio-wizard')">
+            <span>📝</span> Bio Wizard
+        </button>
+        <button class="tab-btn" onclick="switchTool('scout-report')">
+            <span>🔍</span> Scout Report
+        </button>
+        <button class="tab-btn" onclick="switchTool('drill-coach')">
+            <span>⚽</span> Drill Coach
+        </button>
+    </div>
+
+    <!-- TOOL 1: Bio Wizard -->
+    <div id="bio-wizard" class="tool-card active">
+        <div class="tool-header">
+            <h2>✨ Pro Bio Generator</h2>
+            <p>Turn rough details into a professional player biography.</p>
+        </div>
+        <div class="tool-body">
+            <div class="input-section">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="bio-name" class="input-control" placeholder="e.g. John Doe">
+                </div>
+                <div class="input-group">
+                    <label>Position & Style</label>
+                    <input type="text" id="bio-position" class="input-control" placeholder="e.g. Attacking Midfielder, creative playmaker">
+                </div>
+                <div class="input-group">
+                    <label>Key Achievements / History</label>
+                    <textarea id="bio-history" class="input-control" placeholder="e.g. Academy captain 2023, Top scorer in regional league, played for Jinja FC..."></textarea>
+                </div>
+                <button style="background-color: #4a0072" onclick="generateBio()" id="btn-bio" class="btn-generate">
+                    <span class="btn-text">Generate Bio ✨</span>
+                    <div class="loading-spinner"></div>
+                </button>
+            </div>
+            <div class="result-area">
+                <div class="result-header">AI Generated Bio</div>
+                <div id="result-bio" class="generated-content">Your professional bio will appear here...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOOL 2: Scout Report -->
+    <div id="scout-report" class="tool-card">
+        <div class="tool-header">
+            <h2>✨ Scout Report Assistant</h2>
+            <p>Format raw match notes into a structured scouting brief.</p>
+        </div>
+        <div class="tool-body">
+            <div class="input-section">
+                <div class="input-group">
+                    <label>Player Name</label>
+                    <input type="text" id="scout-name" class="input-control">
+                </div>
+                <div class="input-group">
+                    <label>Raw Match Notes</label>
+                    <textarea id="scout-notes" class="input-control" placeholder="e.g. Good pace on the wing, weak left foot, excellent crossing ability, tracked back well in second half, needs to improve heading..."></textarea>
+                </div>
+                <button onclick="generateReport()" id="btn-scout" class="btn-generate">
+                    <span class="btn-text">Format Report ✨</span>
+                    <div class="loading-spinner"></div>
+                </button>
+            </div>
+            <div class="result-area">
+                <div class="result-header">Structured Report</div>
+                <div id="result-scout" class="generated-content">Report will appear here...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOOL 3: Drill Coach -->
+    <div id="drill-coach" class="tool-card">
+        <div class="tool-header">
+            <h2>✨ Smart Drill Recommender</h2>
+            <p>Get personalized training drills based on specific needs.</p>
+        </div>
+        <div class="tool-body">
+            <div class="input-section">
+                <div class="input-group">
+                    <label>Player Position</label>
+                    <select id="drill-pos" class="input-control">
+                        <option>Goalkeeper</option>
+                        <option>Defender</option>
+                        <option>Midfielder</option>
+                        <option>Forward</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Area to Improve</label>
+                    <input type="text" id="drill-focus" class="input-control" placeholder="e.g. First touch, Stamina, 1v1 Defending...">
+                </div>
+                <button onclick="generateDrills()" id="btn-drill" class="btn-generate">
+                    <span class="btn-text">Get Drills ✨</span>
+                    <div class="loading-spinner"></div>
+                </button>
+            </div>
+            <div class="result-area">
+                <div class="result-header">Recommended Session</div>
+                <div id="result-drill" class="generated-content">Drills will appear here...</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // --- GEMINI API SETUP ---
+    const apiKey = ""; // The execution environment provides the key at runtime.
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+    // --- HELPER: CALL GEMINI ---
+    async function callGemini(prompt, resultElementId, btnId) {
+        const btn = document.getElementById(btnId);
+        const spinner = btn.querySelector('.loading-spinner');
+        const btnText = btn.querySelector('.btn-text');
+        const resultEl = document.getElementById(resultElementId);
+
+        // UI Loading State
+        btn.disabled = true;
+        spinner.style.display = 'block';
+        btnText.style.opacity = '0.5';
+        resultEl.innerText = "Thinking...";
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }]
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.candidates && data.candidates[0].content) {
+                const text = data.candidates[0].content.parts[0].text;
+                resultEl.innerText = text;
+            } else {
+                resultEl.innerText = "Error: Could not generate content. Please try again.";
+                console.error("Gemini Error:", data);
+            }
+
+        } catch (error) {
+            resultEl.innerText = "Network Error. Please check your connection.";
+            console.error("Fetch Error:", error);
+        } finally {
+            // UI Reset State
+            btn.disabled = false;
+            spinner.style.display = 'none';
+            btnText.style.opacity = '1';
+        }
+    }
+
+    // --- TOOL 1: BIO GENERATOR ---
+    function generateBio() {
+        const name = document.getElementById('bio-name').value;
+        const pos = document.getElementById('bio-position').value;
+        const history = document.getElementById('bio-history').value;
+
+        if(!name || !pos) { alert("Please fill in Name and Position"); return; }
+
+        const prompt = `You are a professional sports publicist. Write a concise, exciting, professional biography (max 150 words) for a football player named ${name}.
+        Position: ${pos}.
+        Key details/history: ${history}.
+        Tone: Inspiring and professional. Use formatting like paragraphs.`;
+
+        callGemini(prompt, 'result-bio', 'btn-bio');
+    }
+
+    // --- TOOL 2: SCOUT REPORT ---
+    function generateReport() {
+        const name = document.getElementById('scout-name').value;
+        const notes = document.getElementById('scout-notes').value;
+
+        if(!notes) { alert("Please enter some match notes"); return; }
+
+        const prompt = `You are a senior football scout. Convert the following raw match notes into a structured Scouting Report for player ${name || 'Unknown'}.
+
+        Raw Notes: "${notes}"
+
+        Please format the output strictly with these sections:
+        1. 🌟 Strengths
+        2. ⚠️ Areas for Improvement
+        3. 💡 Overall Potential (Summary)
+
+        Keep it professional and objective.`;
+
+        callGemini(prompt, 'result-scout', 'btn-scout');
+    }
+
+    // --- TOOL 3: DRILL COACH ---
+    function generateDrills() {
+        const pos = document.getElementById('drill-pos').value;
+        const focus = document.getElementById('drill-focus').value;
+
+        if(!focus) { alert("Please specify an area to improve"); return; }
+
+        const prompt = `You are a UEFA qualified football coach. Suggest 3 specific, actionable training drills for a ${pos} who wants to improve their "${focus}".
+
+        For each drill include:
+        - Drill Name
+        - Setup (brief)
+        - Key Coaching Point
+
+        Keep it practical for a player who might be training alone or with one partner.`;
+
+        callGemini(prompt, 'result-drill', 'btn-drill');
+    }
+
+    // --- UI TABS LOGIC ---
+    function switchTool(toolId) {
+        // Hide all tools
+        document.querySelectorAll('.tool-card').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+        // Show selected
+        document.getElementById(toolId).classList.add('active');
+
+        // Highlight button (simple logic finding button by onclick text content match would be fragile, so we rely on order or just re-render.
+        // Simpler approach: find the button that called this. But here we just loop.)
+        // Actually, let's just use event.currentTarget if we passed event, but we didn't.
+        // Let's just map ID to index or simple query.
+        const btns = document.querySelectorAll('.tab-btn');
+        if(toolId === 'bio-wizard') btns[0].classList.add('active');
+        if(toolId === 'scout-report') btns[1].classList.add('active');
+        if(toolId === 'drill-coach') btns[2].classList.add('active');
+    }
+</script>
+{% endblock %}

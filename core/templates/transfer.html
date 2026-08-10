@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-white rounded-lg shadow-lg p-8 border-t-4 border-purple-700">
+  <div class="mb-6">
+    <h2 class="text-2xl font-bold text-black">Transfer Player</h2>
+    <p class="text-gray-600 mt-2">Initiate a transfer for <span class="font-bold text-purple-700">{{ object.first_name }} {{ object.last_name }}</span>.</p>
+    <p class="text-sm mt-1 mb-4 text-black font-medium">Current Academy:
+      {% if object.academy %}<span class="text-gray-600">{{ object.academy.name }}</span>{% else %}<span class="text-gray-500 italic">None (Free Agent)</span>{% endif %}
+    </p>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="text-gray-800">
+      {{ form.as_p }}
+    </div>
+
+    <div class="flex justify-end space-x-4 pt-4 mt-6 border-t border-gray-200">
+      <a href="{% url 'dashboard' %}" class="px-4 py-2 border border-gray-300 rounded-md text-black hover:bg-gray-100 transition">Cancel</a>
+      <button type="submit" class="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 font-bold shadow transition">Confirm Transfer</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

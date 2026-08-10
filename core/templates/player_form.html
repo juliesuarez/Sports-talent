@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} | Roster Management{% endblock %}
+
+{% block style %}
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,900&display=swap" rel="stylesheet">
+<style>
+  /* --- SKY SPORTS INSPIRED PREMIUM THEME --- */
+  :root {
+    --sky-purple: #4a0072;
+    --sky-purple-dark: #31004a;
+    --sky-purple-light: #7b1fa2;
+    --deep-black: #111111;
+    --pure-white: #ffffff;
+    --soft-gray: #f8f8f8;
+    --border-gray: #dddddd;
+  }
+
+  body {
+    background-color: var(--soft-gray);
+    font-family: 'Roboto', sans-serif;
+    color: var(--deep-black);
+  }
+
+  .form-container {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 0 20px;
+  }
+
+  /* --- FORM HEADER --- */
+  .form-header {
+    background-color: var(--deep-black);
+    padding: 30px;
+    border-bottom: 5px solid var(--sky-purple);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .form-header h2 {
+    color: var(--pure-white);
+    margin: 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-style: italic;
+    letter-spacing: -1px;
+  }
+
+  .live-indicator {
+    background: var(--sky-purple);
+    color: white;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  /* --- FORM CARD --- */
+  .form-card {
+    background: var(--pure-white);
+    padding: 40px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  }
+
+  .form-group {
+    margin-bottom: 25px;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Styling Django Form Inputs */
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--border-gray);
+    background: var(--soft-gray);
+    font-size: 1rem;
+    transition: all 0.3s;
+    border-radius: 0; /* Sharp edges for sports feel */
+    box-sizing: border-box;
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: var(--sky-purple);
+    background: var(--pure-white);
+    box-shadow: 0 0 0 4px rgba(74, 0, 114, 0.1);
+  }
+
+  /* --- BUTTONS --- */
+  .btn-row {
+    margin-top: 40px;
+    display: flex;
+    gap: 15px;
+  }
+
+  .btn-save {
+    flex: 2;
+    background-color: var(--sky-purple);
+    color: white;
+    border: none;
+    padding: 15px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn-save:hover {
+    background-color: var(--sky-purple-dark);
+  }
+
+  .btn-cancel {
+    flex: 1;
+    background-color: var(--deep-black);
+    color: white;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+  }
+
+  .btn-cancel:hover {
+    opacity: 0.8;
+    color: white;
+  }
+
+  /* Error messages */
+  .error-text {
+    color: #d32f2f;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: block;
+  }
+
+  @media (max-width: 600px) {
+    .btn-row {
+      flex-direction: column;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <div class="form-header">
+    <h2>{{ title }}</h2>
+    <span class="live-indicator">Player Registration</span>
+  </div>
+
+  <div class="form-card">
+    <p style="margin-bottom: 30px; color: #666; font-style: italic;">
+      Enter the player's personal details to add them to your club's official roster.
+    </p>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% for field in form %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+        {% for error in field.errors %}
+        <span class="error-text">{{ error }}</span>
+        {% endfor %}
+        {% endif %}
+      </div>
+      {% endfor %}
+
+      <div class="btn-row">
+        <button type="submit" class="btn-save">
+          {% if "Update" in title %}Update Details{% else %}Register to Roster{% endif %}
+        </button>
+        <a href="{% url 'manage_roster' %}" class="btn-cancel">Back</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

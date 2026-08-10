@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Squad | {{ org_name }}{% endblock %}
+
+{% block style %}
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,900&display=swap" rel="stylesheet">
+<style>
+    /* Reusing your theme variables for consistency */
+    :root {
+        --sky-blue: #06163F;
+        --sky-red: #CD1316;
+        --sky-gray: #f4f4f4;
+    }
+
+    body {
+        background-color: #eee;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .manage-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    /* --- DASHBOARD HEADER --- */
+    .dashboard-header {
+        background: white;
+        padding: 30px;
+        border-left: 8px solid var(--sky-blue);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-title h2 {
+        margin: 0;
+        font-size: 2rem;
+        color: var(--sky-blue);
+        text-transform: uppercase;
+        font-weight: 900;
+        font-style: italic;
+    }
+
+    .dashboard-title p {
+        margin: 5px 0 0;
+        color: #666;
+        font-size: 1rem;
+    }
+
+    .action-btn {
+        background-color: var(--sky-red);
+        color: white;
+        padding: 12px 25px;
+        text-decoration: none;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .action-btn:hover {
+        background-color: #a00f11;
+    }
+
+    /* --- TOOLBAR --- */
+    .toolbar {
+        background-color: var(--sky-blue);
+        padding: 15px 20px;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        color: white;
+        border-bottom: 4px solid var(--sky-red);
+    }
+
+    .search-input {
+        flex-grow: 1;
+        padding: 12px;
+        border: none;
+        font-size: 1rem;
+        border-radius: 0;
+    }
+
+    .filter-select {
+        padding: 12px;
+        border: none;
+        font-size: 1rem;
+        min-width: 180px;
+        cursor: pointer;
+        border-radius: 0;
+    }
+
+    /* --- TABLE --- */
+    .table-responsive {
+        background: white;
+        overflow-x: auto;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .roster-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px;
+    }
+
+    .roster-table th {
+        text-align: left;
+        padding: 15px 20px;
+        background: #e0e0e0;
+        color: var(--sky-blue);
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        font-weight: 800;
+        border-bottom: 2px solid #ccc;
+    }
+
+    .roster-table td {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        color: #333;
+        vertical-align: middle;
+    }
+
+    .roster-table tr:hover td {
+        background-color: #f9f9f9;
+    }
+
+    .player-name {
+        font-weight: bold;
+        color: var(--sky-blue);
+        font-size: 1.05rem;
+    }
+
+    /* --- ACTION BUTTONS --- */
+    .actions-cell {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-edit {
+        background: white;
+        color: var(--sky-blue);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.8rem;
+        border: 2px solid var(--sky-blue);
+        padding: 6px 12px;
+        text-transform: uppercase;
+        transition: all 0.2s;
+    }
+
+    .btn-delete {
+        background: white;
+        color: var(--sky-red);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.8rem;
+        border: 2px solid var(--sky-red);
+        padding: 6px 12px;
+        text-transform: uppercase;
+        transition: all 0.2s;
+    }
+
+    .btn-edit:hover { background: var(--sky-blue); color: white; }
+    .btn-delete:hover { background: var(--sky-red); color: white; }
+
+    /* --- NAVIGATION FOOTER --- */
+    .nav-links {
+        margin-top: 20px;
+        text-align: right;
+    }
+    .nav-links a {
+        color: #666;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--sky-blue); text-decoration: underline; }
+
+    @media (max-width: 768px) {
+        .dashboard-header { flex-direction: column; align-items: stretch; text-align: center; }
+        .toolbar { flex-direction: column; align-items: stretch; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="manage-container">
+
+    <div class="dashboard-header">
+        <div class="dashboard-title">
+            <h2>{{ org_name }}</h2>
+            <p>Squad Management Dashboard</p>
+        </div>
+        <a href="{% url 'add_roster_player' %}" class="action-btn">
+            <span>+</span> Add New Player
+        </a>
+    </div>
+
+    <div class="toolbar">
+        <input type="text" id="roster-search" class="search-input" placeholder="Search roster by Name or Country...">
+        <select id="roster-position-filter" class="filter-select">
+            <option value="">All Positions</option>
+            {% for pos in positions %}
+            <option value="{{ pos }}">{{ pos }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="table-responsive">
+        <table class="roster-table">
+            <thead>
+            <tr>
+                <th>Player Name</th>
+                <th>Position</th>
+                <th>Country</th>
+                <th>Age</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="roster-body">
+            {% for player in players %}
+            <tr class="roster-row" data-position="{{ player.position }}">
+                <td class="player-name">{{ player.user.get_full_name|default:player.user.username }}</td>
+                <td><strong>{{ player.position }}</strong></td>
+                <td>{{ player.country }}</td>
+                <td>{{ player.age|default:'-' }}</td>
+                <td><span style="color: #28a745; font-weight: bold; font-size: 0.9rem;">Active</span></td>
+                <td class="actions-cell">
+                    <a href="{% url 'edit_roster_player' player.pk %}" class="btn-edit">Edit</a>
+                    <a href="{% url 'delete_roster_player' player.pk %}" class="btn-delete">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 50px; color: #777; font-style: italic;">
+                    No players found in your roster. Use the "Add New Player" button to get started.
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="nav-links">
+        <a href="{% url 'discover_talents' %}">← Return to Global Talent Database</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('roster-search');
+        const posFilter = document.getElementById('roster-position-filter');
+        const tableBody = document.getElementById('roster-body');
+        const rows = Array.from(tableBody.querySelectorAll('.roster-row'));
+
+        function filterRoster() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const posTerm = posFilter.value;
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const pos = row.dataset.position;
+
+                // Check text match (Name or Country usually in textContent)
+                const matchesSearch = text.includes(searchTerm);
+                // Check position match
+                const matchesPos = posTerm === "" || pos === posTerm;
+
+                if (matchesSearch && matchesPos) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        searchInput.addEventListener('keyup', filterRoster);
+        posFilter.addEventListener('change', filterRoster);
+    });
+</script>
+{% endblock %}

@@ -25,10 +25,15 @@ SECRET_KEY = 'django-insecure-zgl!we9$%*#i9@yb2xs*b36_0a=2$iuv53gv8h2afs3nkkb*73
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sports-talent.onrender.com', '127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','178.128.195.147','playersystem.org', 'www.playersystem.org']
 
-CSRF_TRUSTED_ORIGINS = ['https://sports-talent.onrender.com/']
+CSRF_TRUSTED_ORIGINS = [
+    'https://playersystem.org',
+    'https://www.playersystem.org',
+]
+
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -49,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'talentplatform.urls'
@@ -70,10 +76,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'talentplatform.wsgi.application'
 
-AUTH_USER_MODEL = 'core.CustomUser'
 
-LOGIN_REDIRECT_URL = 'login_redirect'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'dashboard'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -84,12 +88,38 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+ENVIRONMENT = os.environ.get('ENVIRONMENT', 'development')
+
+if ENVIRONMENT == 'production':
+    # --- PRODUCTION SETTINGS ---
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('POSTGRES_DB', 'postgres'),
+            'USER': os.environ.get('POSTGRES_USER', 'postgres'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'postgres'),
+            'HOST': os.environ.get('DB_HOST', 'db'),
+            'PORT': os.environ.get('DB_PORT', '5432'),
+        }
     }
-}
+else:
+    # --- DEVELOPMENT SETTINGS ---
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'dev',
+            'USER': 'postgres',
+            'PASSWORD': 'Nakawesi',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
@@ -126,10 +156,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = BASE_DIR / 'staticfiles' 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+

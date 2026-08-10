@@ -2,49 +2,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}EA Football Talent{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
-    {% block style %}{% endblock %}
+    <title>{% block title %}ProTalent | Talent Management System{% endblock %}</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Sky Sports Aesthetic: Sharp, bold, high-contrast forms */
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1.25rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0; /* Sharp edges for a broadcast look */
+            color: #000;
+            background-color: #fff;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #000; /* Sharp black focus */
+            box-shadow: none;
+        }
+        label {
+            font-weight: 800;
+            color: #111;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+        .helptext, .errorlist {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-top: -1rem;
+            margin-bottom: 0.75rem;
+            display: block;
+            font-weight: 600;
+        }
+        .errorlist { color: #dc2626; }
+
+        /* Custom scrollbar for premium feel */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #111; }
+        ::-webkit-scrollbar-thumb { background: #6b21a8; }
+        ::-webkit-scrollbar-thumb:hover { background: #9333ea; }
+    </style>
 </head>
-<body>
-    <header class="main-header">
-        <div class="container">
-            <a href="{% url 'home' %}" class="logo">EA Football Talent</a>
-            <nav class="main-nav">
-                <ul>
-                    {% if user.is_authenticated %}
-                        {% if user.user_type == 'player' %}
-                            <li><a href="{% url 'player_dashboard' %}">My Dashboard</a></li>
-                        {% elif user.user_type == 'club' %}
-                            <li><a href="{% url 'discover_talents' %}">Discover Talents</a></li>
-                        {% endif %}
-                        <li>
-                            <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                                {% csrf_token %}
-                                <button type="submit" class="logout-button">Logout</button>
-                            </form>
-                        </li>
-                    {% else %}
-                        <li><a href="{% url 'login' %}">Login</a></li>
-                        <li><a href="{% url 'register' %}">Register</a></li>
-                        <li><a href="{% url 'pricing' %}">Pricing</a></li>
-                    {% endif %}
+<body class="bg-gray-100 text-black font-sans min-h-screen flex flex-col selection:bg-purple-500 selection:text-white">
+
+<!-- Navbar (Premium Black & Purple) -->
+<nav class="bg-black text-white border-b-4 border-purple-700 sticky top-0 z-50 shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20 items-center">
+
+            <!-- Logo -->
+            <div class="flex-shrink-0 z-50">
+                <a href="{% url 'index' %}" class="block hover:opacity-80 transition-opacity">
+                    <img src="{% static 'images/PPS_final.jpg' %}" alt="PPS - Player Profile System" class="h-20 md:h-14 w-auto object-contain bg-white rounded-md p-1">
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center space-x-6">
+                {% if user.is_authenticated %}
+                <span class="text-gray-400 text-xs font-bold uppercase tracking-widest mr-2">Admin: {{ user.username }}</span>
+
+                <!-- ONLY Superusers will see this link now -->
+                {% if user.is_superuser %}
+                <a href="{% url 'super_admin_dashboard' %}" class="text-sm font-bold uppercase tracking-wider text-purple-400 hover:text-white transition-colors">Directory</a>
+                {% endif %}
+
+                <a href="{% url 'dashboard' %}" class="text-sm font-bold uppercase tracking-wider hover:text-purple-400 transition-colors">Dashboard</a>
+                <a href="{% url 'academy_add' %}" class="bg-purple-700 text-white px-5 py-2.5 text-xs font-black uppercase tracking-widest hover:bg-purple-600 transition-colors shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-y-1 hover:translate-x-1">+ Academy</a>
+                <a href="{% url 'player_add' %}" class="bg-white text-black px-5 py-2.5 text-xs font-black uppercase tracking-widest hover:bg-gray-200 transition-colors shadow-[4px_4px_0px_0px_rgba(126,34,206,0.5)] hover:shadow-none hover:translate-y-1 hover:translate-x-1">+ Player</a>
+
+                <!-- Logout Form -->
+                <form method="post" action="{% url 'logout' %}" class="inline ml-2">
+                    {% csrf_token %}
+                    <button type="submit" class="text-sm font-bold uppercase tracking-wider text-gray-400 hover:text-white transition-colors">Logout</button>
+                </form>
+                {% else %}
+                <!-- Extended Guest Links -->
+                <a href="{% url 'index' %}" class="text-xs font-bold uppercase tracking-widest hover:text-purple-400 transition-colors">Home</a>
+                <a href="#services" class="text-xs font-bold uppercase tracking-widest hover:text-purple-400 transition-colors">Services</a>
+                <a href="#partnerships" class="text-xs font-bold uppercase tracking-widest hover:text-purple-400 transition-colors">Partnerships</a>
+                <a href="#pricing" class="text-xs font-bold uppercase tracking-widest hover:text-purple-400 transition-colors">Pricing</a>
+
+                <div class="h-6 w-px bg-gray-700 mx-2"></div> <!-- Divider -->
+
+                <a href="{% url 'login' %}" class="text-xs font-bold uppercase tracking-widest hover:text-purple-400 transition-colors">Login</a>
+                <a href="{% url 'register' %}" class="bg-purple-600 text-white px-6 py-2.5 text-xs font-black uppercase tracking-widest hover:bg-purple-500 transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-y-1 hover:translate-x-1">Get Started</a>
+                {% endif %}
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="lg:hidden flex items-center z-50">
+                <button id="mobile-menu-btn" class="text-white hover:text-purple-400 focus:outline-none p-2">
+                    <svg id="icon-open" class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg id="icon-close" class="h-8 w-8 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Panel -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-black border-t border-gray-800 absolute w-full left-0 top-20 shadow-2xl pb-6">
+        <div class="px-4 pt-4 pb-4 space-y-2 flex flex-col">
+            {% if user.is_authenticated %}
+            <div class="px-4 py-3 bg-gray-900 text-gray-400 text-xs font-bold uppercase tracking-widest mb-2 border-l-4 border-purple-600">
+                Admin: {{ user.username }}
+            </div>
+            {% if user.is_superuser %}
+            <a href="{% url 'super_admin_dashboard' %}" class="block px-4 py-3 text-sm font-bold uppercase tracking-wider text-purple-400 hover:bg-gray-900 hover:text-white transition-colors">Directory</a>
+            {% endif %}
+            <a href="{% url 'dashboard' %}" class="block px-4 py-3 text-sm font-bold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors">Dashboard</a>
+            <a href="{% url 'academy_add' %}" class="block px-4 py-3 text-sm font-bold uppercase tracking-wider text-purple-400 hover:bg-gray-900 hover:text-white transition-colors">+ Add Academy</a>
+            <a href="{% url 'player_add' %}" class="block px-4 py-3 text-sm font-bold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors">+ Add Player</a>
+
+            <form method="post" action="{% url 'logout' %}" class="block mt-4">
+                {% csrf_token %}
+                <button type="submit" class="w-full text-left px-4 py-3 text-sm font-bold uppercase tracking-wider text-red-500 hover:bg-gray-900 hover:text-red-400 transition-colors">Logout</button>
+            </form>
+            {% else %}
+            <a href="{% url 'index' %}" class="block px-4 py-3 text-sm font-bold uppercase tracking-wider hover:bg-gray-900 hover:text-purple-400 transition-colors">Home</a>
+            <a href="#services" class="block px-4 py-3 text-sm font-bold uppercase tracking-wider hover:bg-gray-900 hover:text-purple-400 transition-colors">Our Services</a>
+            <a href="#partnerships" class="block px-4 py-3 text-sm font-bold uppercase tracking-wider hover:bg-gray-900 hover:text-purple-400 transition-colors">Partnerships</a>
+            <a href="#pricing" class="block px-4 py-3 text-sm font-bold uppercase tracking-wider hover:bg-gray-900 hover:text-purple-400 transition-colors">Pricing</a>
+            <hr class="border-gray-800 my-2">
+            <a href="{% url 'login' %}" class="block px-4 py-3 text-sm font-bold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors">Login</a>
+            <a href="{% url 'register' %}" class="block mt-4 mx-4 bg-purple-600 text-white text-center px-6 py-4 text-sm font-black uppercase tracking-widest hover:bg-purple-500 transition-colors border-2 border-purple-600">Get Started</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="flex-grow w-full">
+    {% block content %}
+    <!-- Index page content will be injected here -->
+    {% endblock %}
+</main>
+
+<!-- Enhanced Footer -->
+<footer class="bg-black text-white py-12 border-t-4 border-purple-700 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="col-span-1 md:col-span-2">
+                <div class="mb-4 inline-block">
+                    <img src="{% static 'images/PPS_final.jpg' %}" alt="PPS - Player Profile System" class="h-12 w-auto object-contain bg-white rounded-md p-1">
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed max-w-sm">
+                    The ultimate platform for academies, scouts, and players. Manage talent, track performance, and bridge the gap to professional sports.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Platform</h4>
+                <ul class="space-y-2">
+                    <li><a href="#services" class="text-sm text-gray-300 hover:text-purple-400 transition">Services</a></li>
+                    <li><a href="#pricing" class="text-sm text-gray-300 hover:text-purple-400 transition">Pricing</a></li>
+                    <li><a href="#partnerships" class="text-sm text-gray-300 hover:text-purple-400 transition">Partnerships</a></li>
                 </ul>
-            </nav>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Company</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-sm text-gray-300 hover:text-purple-400 transition">About Us</a></li>
+                    <li><a href="#" class="text-sm text-gray-300 hover:text-purple-400 transition">Contact Support</a></li>
+                    <li><a href="#" class="text-sm text-gray-300 hover:text-purple-400 transition">Privacy Policy</a></li>
+                </ul>
+            </div>
         </div>
-    </header>
-
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; {% now "Y" %} EA Football Talent. All Rights Reserved.</p>
+        <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4 md:mb-0">
+                &copy; 2026 Rapcio Fairplay Platform. All rights reserved.
+            </p>
+            <div class="flex space-x-4">
+                <!-- Social Icons Placeholder -->
+                <a href="#" class="text-gray-500 hover:text-purple-400 transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
+                <a href="#" class="text-gray-500 hover:text-purple-400 transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.7-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+            </div>
         </div>
-    </footer>
+    </div>
+</footer>
+
+<!-- Mobile Menu Toggle Script -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('icon-open');
+        const iconClose = document.getElementById('icon-close');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            iconOpen.classList.toggle('hidden');
+            iconClose.classList.toggle('hidden');
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -1,20 +1,25 @@
 from django.urls import path
-from . views import home,register,upload_video,discover_talents,player_dashboard,login_redirect,player_detail,pricing_page
 from django.contrib.auth import views as auth_views
-urlpatterns = [
-    path('', home, name='home'),
-    
-    path('register/',register, name='register'),
-    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
-    # Player-specific URLs
-    path('dashboard/', player_dashboard, name='player_dashboard'),
-    path('upload/', upload_video, name='upload_video'),
+from . import views
 
-    # Club-specific URLs
-    path('discover/', discover_talents, name='discover_talents'),
-    path('redirect/', login_redirect, name='login_redirect'),
-    
-    path('player/<int:pk>/', player_detail, name='player_detail'),
-    path('pricing/', pricing_page, name='pricing'),
-    ]
+urlpatterns = [
+    # Landing page
+    path('', views.IndexView.as_view(), name='index'),
+
+    # Dashboard and Management (Protected)
+    path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
+    path('academy/add/', views.AcademyCreateView.as_view(), name='academy_add'),
+    path('player/add/', views.PlayerCreateView.as_view(), name='player_add'),
+    path('player/<int:pk>/edit/', views.PlayerUpdateView.as_view(), name='player_edit'),
+    path('player/<int:pk>/delete/', views.PlayerDeleteView.as_view(), name='player_delete'),
+    path('player/<int:pk>/transfer/', views.PlayerTransferView.as_view(), name='player_transfer'),
+
+    # Authentication
+    path('register/', views.RegisterView.as_view(), name='register'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
+
+    # Super Admin & Directory
+    path('directory/', views.SuperAdminDashboardView.as_view(), name='super_admin_dashboard'),
+    path('academy/<int:pk>/', views.AcademyDetailView.as_view(), name='academy_detail'),
+]

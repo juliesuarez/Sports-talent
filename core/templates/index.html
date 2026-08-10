@@ -2,696 +2,146 @@
 {% load static %}
 
 {% block content %}
+<!-- HERO SECTION: High Contrast, Bold -->
+<section class="relative bg-black text-white py-20 lg:py-32 overflow-hidden border-b-8 border-purple-700 w-full max-w-none m-0 px-4 sm:px-6 lg:px-8">
+    <!-- Abstract Background Elements -->
+    <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-purple-900 opacity-20 blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 rounded-full bg-purple-600 opacity-20 blur-3xl pointer-events-none"></div>
 
-<section class="hero">
-    <div class="hero-overlay"></div>
-    <div class="container hero-content">
-        <span class="breaking-badge">NEW SPORTS ERA</span>
-        <h1 class="hero-title">YOUR JOURNEY TO PROFESSIONAL FOOTBALL STARTS HERE</h1>
-        <p class="hero-subtitle">
-            The #1 platform connecting talented footballers in Uganda, Kenya, and Tanzania with clubs and scouts. 
-            Get discovered by top teams across East Africa.
-        </p>
-        <div class="hero-actions">
-            <a href="{% url 'register' %}" class="btn btn-sky-primary">GET STARTED FREE</a>
-            <a href="#how-it-works" class="btn btn-sky-outline">HOW IT WORKS</a>
-        </div>
-    </div>
-</section>
-
-<section class="features">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">WHY CHOOSE US</h2>
-            <div class="section-line"></div>
-        </div>
-        
-        <div class="cards">
-            <div class="sky-card">
-                <div class="card-top-border"></div>
-                <div class="card-body">
-                    <h3>FOR PLAYERS</h3>
-                    <p class="highlight-text">Showcase Your Talent</p>
-                    <p>Create your professional profile. Upload goals, saves, and assists. Get noticed by top clubs across East Africa.</p>
-                    <ul class="feature-list">
-                        <li>Unlimited video uploads</li>
-                        <li>Direct scout messaging</li>
-                        <li>Performance analytics</li>
-                    </ul>
-                    <a href="{% url 'register' %}" class="text-link">Create Profile &rarr;</a>
-                </div>
-            </div>
-
-            <div class="sky-card">
-                <div class="card-top-border"></div>
-                <div class="card-body">
-                    <h3>FOR SCOUTS</h3>
-                    <p class="highlight-text">Find Next Gen Talent</p>
-                    <p>Browse a verified database of aspiring footballers. Filter by country, position, and age to find exactly what you need.</p>
-                    <ul class="feature-list">
-                        <li>Advanced search filters</li>
-                        <li>Video analysis tools</li>
-                        <li>Talent shortlisting</li>
-                    </ul>
-                    <a href="{% url 'register' %}" class="text-link">Start Scouting &rarr;</a>
-                </div>
-            </div>
-
-            <div class="sky-card">
-                <div class="card-top-border"></div>
-                <div class="card-body">
-                    <h3>THE PLATFORM</h3>
-                    <p class="highlight-text">Direct & Simple</p>
-                    <p>No middlemen. We create a direct connection between talent and opportunity, making dreams accessible.</p>
-                    <ul class="feature-list">
-                        <li>Mobile-friendly</li>
-                        <li>Verified profiles</li>
-                        <li>Real-time alerts</li>
-                    </ul>
-                    <a href="#about" class="text-link">Read Our Story &rarr;</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="how-it-works" class="how-it-works">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">THE PROCESS</h2>
-            <div class="section-line"></div>
-        </div>
-        <div class="steps-grid">
-            <div class="step-item">
-                <span class="step-num">01</span>
-                <h4>Sign Up</h4>
-                <p>Create your free account as a player or scout in minutes.</p>
-            </div>
-            <div class="step-item">
-                <span class="step-num">02</span>
-                <h4>Upload</h4>
-                <p>Post your best game footage and build your stats.</p>
-            </div>
-            <div class="step-item">
-                <span class="step-num">03</span>
-                <h4>Connect</h4>
-                <p>Scouts search, discover, and message talent directly.</p>
-            </div>
-            <div class="step-item">
-                <span class="step-num">04</span>
-                <h4>Succeed</h4>
-                <p>Secure trials and sign professional contracts.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="about" class="about">
-    <div class="container">
-        <div class="about-header">
-            <h2 class="section-title">OUR VISION</h2>
-            <div class="section-line"></div>
-            <p class="vision-statement">
-                "To become East Africa's leading football talent marketplace, where every player has a fair chance to be seen, and every club can discover their next star player efficiently and affordably."
+    <div class="max-w-7xl mx-auto relative z-10 text-center lg:text-left flex flex-col lg:flex-row items-center gap-12">
+        <div class="lg:w-3/5">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-6">
+                ELEVATE <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-700">YOUR SQUAD</span><br>
+                TO THE NEXT LEVEL
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto lg:mx-0 mb-10 border-l-4 border-purple-500 pl-4">
+                The premier digital scouting and management ecosystem. Uncover raw talent, digitize your academy rosters, and connect with global opportunities—all in real-time.
             </p>
-            <p class="about-desc">
-                We believe talent is universal, but opportunity is not. Whether you're a striker from Kampala, a goalkeeper from Nairobi, or a midfielder from Dar es Salaam, we bridge the gap.
-            </p>
-        </div>
-
-        <div class="values-grid">
-            <div class="value-card">
-                <h4>ACCESSIBILITY</h4>
-                <p>Football opportunities for all, regardless of background or location.</p>
-            </div>
-            <div class="value-card">
-                <h4>TRANSPARENCY</h4>
-                <p>Direct connections without hidden fees, agents, or gatekeepers.</p>
-            </div>
-            <div class="value-card">
-                <h4>EXCELLENCE</h4>
-                <p>Supporting the highest standards of athletic talent and professionalism.</p>
-            </div>
-            <div class="value-card">
-                <h4>COMMUNITY</h4>
-                <p>Building a network that uplifts East African football together.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <a href="{% url 'register' %}" class="bg-purple-600 text-white px-8 py-4 text-sm font-black uppercase tracking-widest hover:bg-purple-500 transition-all shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-y-1 hover:translate-x-1 text-center">
+                    Register Academy
+                </a>
+                <a href="#services" class="bg-transparent border-2 border-white text-white px-8 py-4 text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all text-center">
+                    Explore Features
+                </a>
             </div>
         </div>
-    </div>
-</section>
-
-<section class="quick-contact">
-    <div class="container">
-        <div class="qc-wrapper">
-            <div class="qc-text">
-                <h3>NEED ASSISTANCE?</h3>
-                <p>Send us a quick message and our team will get back to you.</p>
-            </div>
-            <div class="qc-form-container">
-                <form method="post" action="#" class="inline-form">
-                    {% csrf_token %}
-                    <input type="email" name="email" placeholder="Your Email" required>
-                    <input type="text" name="subject" placeholder="Subject" required>
-                    <button type="submit" class="btn btn-sky-primary">SEND</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="cta-bar">
-    <div class="container cta-content">
-        <h2>READY TO TURN PRO?</h2>
-        <a href="{% url 'register' %}" class="btn btn-white">JOIN NOW - IT'S FREE</a>
-    </div>
-</section>
-
-<footer class="footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4 class="footer-brand">FOOTBALL TALENT</h4>
-                <p>Connecting East African football talent with opportunities since 2024.</p>
-                <div class="social-icons">
-                    <a href="#" class="social-link">TW</a>
-                    <a href="#" class="social-link">IG</a>
-                    <a href="#" class="social-link">IN</a>
+        <div class="lg:w-2/5 hidden md:block">
+            <!-- Stylized placeholder for a dashboard graphic/player image -->
+            <div class="bg-gray-900 border-4 border-gray-800 p-4 transform rotate-2 hover:rotate-0 transition duration-500 shadow-2xl relative">
+                <div class="absolute -top-4 -left-4 bg-purple-600 text-white text-xs font-bold uppercase tracking-widest px-3 py-1 z-20">Live Stats</div>
+                <div class="w-full h-64 bg-gray-800 flex items-center justify-center border border-gray-700">
+                    <span class="text-gray-500 font-black uppercase tracking-widest text-xl opacity-50">App Interface Preview</span>
                 </div>
             </div>
-
-            <div class="footer-col">
-                <h4>NAVIGATION</h4>
-                <ul class="footer-links">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="{% url 'register' %}">Register</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h4>SUPPORT</h4>
-                <ul class="footer-links">
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col contact-col">
-                <h4>CONTACT US</h4>
-                <ul class="footer-contact-list">
-                    <li>
-                        <strong>Email:</strong><br>
-                        <a href="mailto:julienakawesi@outlook.com">julienakawesi@outlook.com</a>
-                    </li>
-                    <li>
-                        <strong>Location:</strong><br>
-                        Kampala, Uganda<br>
-                        <span class="text-muted">(Serving UG, KE, TZ)</span>
-                    </li>
-                    <li>
-                        <strong>Hours:</strong><br>
-                        Mon - Fri: 9AM - 6PM EAT
-                    </li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2024 Football Talent Platform. All rights reserved.</p>
         </div>
     </div>
-</footer>
-
-<style>
-/* --- GLOBAL & SKY SPORTS THEME --- */
-:root {
-    --sky-blue: #06163F;   /* Deep Navy */
-    --sky-blue-light: #0c2666;
-    --sky-red: #CD1316;    /* Bright Red */
-    --sky-gray: #f1f2f3;
-    --text-dark: #111111;
-    --text-light: #555555;
-    --white: #ffffff;
-}
-
-body {
-    font-family: 'Roboto', 'Segoe UI', sans-serif; /* Clean sans-serif */
-    color: var(--text-dark);
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #fff;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.section-header {
-    margin-bottom: 40px;
-    border-bottom: 4px solid var(--sky-gray);
-    display: flex;
-    align-items: center;
-    padding-bottom: 10px;
-}
-
-.section-title {
-    font-size: 1.8rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: var(--sky-blue);
-    margin: 0;
-    padding-right: 20px;
-}
-
-.section-line {
-    flex-grow: 1;
-    height: 4px;
-    background: var(--sky-red); /* Red accent line */
-}
-
-/* --- BUTTONS --- */
-.btn {
-    display: inline-block;
-    padding: 12px 30px;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 2px; /* Sharp edges */
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-}
-
-.btn-sky-primary {
-    background-color: var(--sky-red);
-    color: white;
-    border: 2px solid var(--sky-red);
-}
-
-.btn-sky-primary:hover {
-    background-color: #a00f11;
-    border-color: #a00f11;
-    color: white;
-}
-
-.btn-sky-outline {
-    background-color: transparent;
-    color: white;
-    border: 2px solid white;
-}
-
-.btn-sky-outline:hover {
-    background-color: white;
-    color: var(--sky-blue);
-}
-
-.btn-white {
-    background-color: white;
-    color: var(--sky-blue);
-    border: 2px solid white;
-}
-
-.btn-white:hover {
-    background-color: var(--sky-gray);
-    color: var(--sky-blue);
-}
-
-/* --- HERO SECTION --- */
-.hero {
-    background: linear-gradient(135deg, #06163F 0%, #000000 100%);
-    color: white;
-    padding: 100px 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.breaking-badge {
-    background-color: var(--sky-red);
-    color: white;
-    padding: 5px 10px;
-    font-weight: bold;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-    display: inline-block;
-}
-
-.hero-title {
-    font-size: 3.5rem;
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    font-style: italic; /* Sporty feel */
-}
-
-.hero-subtitle {
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin-bottom: 40px;
-    color: #cccccc;
-}
-
-.hero-actions {
-    display: flex;
-    gap: 15px;
-}
-
-/* --- FEATURES (CARDS) --- */
-.features {
-    padding: 60px 0;
-    background-color: white;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-.sky-card {
-    background: white;
-    border: 1px solid #e1e1e1;
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
-}
-
-.sky-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    border-color: var(--sky-blue);
-}
-
-.card-top-border {
-    height: 4px;
-    background: var(--sky-blue);
-    width: 100%;
-}
-
-.sky-card:nth-child(2) .card-top-border {
-    background: var(--sky-red); /* Different color for middle card */
-}
-
-.card-body {
-    padding: 30px;
-}
-
-.card-body h3 {
-    color: var(--sky-blue);
-    font-weight: 900;
-    text-transform: uppercase;
-    margin-top: 0;
-}
-
-.highlight-text {
-    color: var(--sky-red);
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-}
-
-.feature-list {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-}
-
-.feature-list li {
-    padding-left: 20px;
-    position: relative;
-    margin-bottom: 8px;
-    color: var(--text-light);
-    font-size: 0.95rem;
-}
-
-.feature-list li::before {
-    content: "•";
-    color: var(--sky-blue);
-    font-weight: bold;
-    position: absolute;
-    left: 0;
-}
-
-.text-link {
-    color: var(--sky-blue);
-    font-weight: 700;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-}
-
-.text-link:hover {
-    text-decoration: underline;
-}
-
-/* --- HOW IT WORKS --- */
-.how-it-works {
-    background-color: var(--sky-gray);
-    padding: 60px 0;
-}
-
-.steps-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-}
-
-.step-item {
-    background: white;
-    padding: 30px;
-    border-bottom: 3px solid #ddd;
-}
-
-.step-num {
-    font-size: 3rem;
-    font-weight: 900;
-    color: #e1e1e1;
-    display: block;
-    margin-bottom: 10px;
-    line-height: 1;
-}
-
-.step-item h4 {
-    color: var(--sky-blue);
-    font-weight: 800;
-    text-transform: uppercase;
-    margin: 10px 0;
-}
-
-/* --- ABOUT SECTION --- */
-.about {
-    padding: 80px 0;
-}
-
-.about-header {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 60px;
-}
-
-.about-header .section-line {
-    margin: 0 auto;
-    width: 100px;
-    flex-grow: 0;
-    margin-bottom: 20px;
-}
-
-.vision-statement {
-    font-size: 1.4rem;
-    font-weight: 300;
-    color: var(--sky-blue);
-    font-style: italic;
-    margin-bottom: 20px;
-}
-
-.values-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.value-card {
-    background: var(--sky-blue);
-    color: white;
-    padding: 30px;
-    text-align: center;
-}
-
-.value-card h4 {
-    color: var(--sky-red);
-    font-weight: 900;
-    text-transform: uppercase;
-    margin-top: 0;
-    font-size: 1.1rem;
-}
-
-.value-card p {
-    font-size: 0.9rem;
-    margin: 0;
-    opacity: 0.9;
-}
-
-/* --- QUICK CONTACT STRIP --- */
-.quick-contact {
-    background: #f9f9f9;
-    padding: 40px 0;
-    border-top: 1px solid #ddd;
-}
-
-.qc-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.qc-text h3 {
-    margin: 0;
-    color: var(--sky-blue);
-    font-weight: 800;
-}
-
-.inline-form {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.inline-form input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    min-width: 200px;
-}
-
-/* --- CTA BAR --- */
-.cta-bar {
-    background-color: var(--sky-red);
-    padding: 50px 0;
-    text-align: center;
-    color: white;
-}
-
-.cta-content h2 {
-    font-weight: 900;
-    text-transform: uppercase;
-    font-size: 2.5rem;
-    margin-top: 0;
-    font-style: italic;
-}
-
-/* --- FOOTER --- */
-.footer {
-    background-color: #111;
-    color: #999;
-    padding: 60px 0 20px;
-    border-top: 5px solid var(--sky-blue);
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.footer-col h4 {
-    color: white;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    font-size: 1rem;
-    border-left: 3px solid var(--sky-blue);
-    padding-left: 10px;
-}
-
-.footer-links {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-links li {
-    margin-bottom: 10px;
-}
-
-.footer-links a {
-    color: #999;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.footer-links a:hover {
-    color: white;
-    padding-left: 5px;
-}
-
-/* Contact Specifics in Footer */
-.footer-contact-list {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-contact-list li {
-    margin-bottom: 15px;
-    font-size: 0.9rem;
-}
-
-.footer-contact-list strong {
-    color: white;
-    display: block;
-    margin-bottom: 2px;
-}
-
-.footer-contact-list a {
-    color: #ccc;
-    text-decoration: none;
-}
-
-.social-icons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.social-link {
-    width: 35px;
-    height: 35px;
-    background: #333;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.8rem;
-}
-
-.social-link:hover {
-    background: var(--sky-blue);
-}
-
-.footer-bottom {
-    border-top: 1px solid #333;
-    padding-top: 20px;
-    text-align: center;
-    font-size: 0.8rem;
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-    .hero-title { font-size: 2.5rem; }
-    .qc-wrapper { flex-direction: column; text-align: center; }
-    .inline-form { flex-direction: column; width: 100%; }
-    .inline-form input { width: 100%; box-sizing: border-box; }
-    .inline-form button { width: 100%; }
-}
-</style>
-
+</section>
+
+<!-- SERVICES SECTION -->
+<section id="services" class="py-20 bg-gray-100 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+        <h2 class="text-4xl font-black uppercase tracking-tight text-black mb-4">Core <span class="text-purple-600">Services</span></h2>
+        <div class="w-24 h-1 bg-black mx-auto"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Service 1 -->
+        <div class="bg-white p-8 border-2 border-transparent hover:border-purple-600 transition-colors shadow-lg group">
+            <div class="w-14 h-14 bg-black text-white flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            </div>
+            <h3 class="text-xl font-black uppercase tracking-wider mb-3">Roster Management</h3>
+            <p class="text-gray-600 text-sm leading-relaxed font-medium">Digitize your academy. Add players, manage positions, update bios, and keep all vital documents securely stored in one central hub.</p>
+        </div>
+        <!-- Service 2 -->
+        <div class="bg-white p-8 border-2 border-transparent hover:border-purple-600 transition-colors shadow-lg group">
+            <div class="w-14 h-14 bg-black text-white flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            </div>
+            <h3 class="text-xl font-black uppercase tracking-wider mb-3">Performance Analytics</h3>
+            <p class="text-gray-600 text-sm leading-relaxed font-medium">Track match statistics, physical growth, and seasonal performance. Make data-driven decisions to foster elite talent.</p>
+        </div>
+        <!-- Service 3 -->
+        <div class="bg-white p-8 border-2 border-transparent hover:border-purple-600 transition-colors shadow-lg group">
+            <div class="w-14 h-14 bg-black text-white flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            </div>
+            <h3 class="text-xl font-black uppercase tracking-wider mb-3">Global Scouting</h3>
+            <p class="text-gray-600 text-sm leading-relaxed font-medium">Give your players visibility. Our directory allows verified international scouts and clubs to discover your top-performing athletes.</p>
+        </div>
+    </div>
+</section>
+
+<!-- PARTNERSHIPS SECTION -->
+<section id="partnerships" class="py-16 bg-white border-y-2 border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h3 class="text-sm font-black uppercase tracking-widest text-gray-400 mb-8">Trusted by Elite Academies & Brands</h3>
+        <div class="flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale">
+            <!-- Placeholders for partner logos -->
+            <div class="text-2xl font-black tracking-tighter">PARTNER<span class="text-purple-600">ONE</span></div>
+            <div class="text-2xl font-black tracking-tighter">ELITE<span class="text-black">SPORTS</span></div>
+            <div class="text-2xl font-black tracking-tighter">GLOBAL<span class="text-purple-600">SCOUT</span></div>
+            <div class="text-2xl font-black tracking-tighter">ACADEMY<span class="text-black">PRO</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING SECTION -->
+<section id="pricing" class="py-20 bg-gray-100 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+        <h2 class="text-4xl font-black uppercase tracking-tight text-black mb-4">Flexible <span class="text-purple-600">Pricing</span></h2>
+        <div class="w-24 h-1 bg-black mx-auto mb-4"></div>
+        <p class="text-gray-600 font-medium">Start for free. Upgrade as your academy grows.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <!-- Basic -->
+        <div class="bg-white p-8 border border-gray-200 text-center hover:shadow-xl transition flex flex-col">
+            <h3 class="text-xl font-black uppercase tracking-wider text-gray-500 mb-2">Starter</h3>
+            <div class="text-4xl font-black mb-6">$0<span class="text-sm text-gray-400 font-medium">/mo</span></div>
+            <ul class="text-sm font-medium text-gray-600 space-y-3 mb-8 flex-grow">
+                <li>Up to 20 Players</li>
+                <li>Basic Stats Tracking</li>
+                <li>Community Support</li>
+            </ul>
+            <a href="{% url 'register' %}" class="block w-full border-2 border-black text-black py-3 text-sm font-black uppercase tracking-widest hover:bg-black hover:text-white transition">Choose Starter</a>
+        </div>
+        <!-- Pro (Highlighted) -->
+        <div class="bg-black text-white p-8 border-t-8 border-purple-600 shadow-2xl text-center transform md:-translate-y-4 flex flex-col">
+            <h3 class="text-xl font-black uppercase tracking-wider text-purple-400 mb-2">Professional</h3>
+            <div class="text-4xl font-black mb-6">$49<span class="text-sm text-gray-400 font-medium">/mo</span></div>
+            <ul class="text-sm font-medium text-gray-300 space-y-3 mb-8 flex-grow border-t border-gray-800 pt-6">
+                <li>Unlimited Players</li>
+                <li>Advanced Analytics & Video</li>
+                <li>Scout Directory Access</li>
+                <li>Priority Support</li>
+            </ul>
+            <a href="{% url 'register' %}" class="block w-full bg-purple-600 text-white py-3 text-sm font-black uppercase tracking-widest hover:bg-purple-500 transition shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-y-1 hover:translate-x-1">Get Pro</a>
+        </div>
+        <!-- Enterprise -->
+        <div class="bg-white p-8 border border-gray-200 text-center hover:shadow-xl transition flex flex-col">
+            <h3 class="text-xl font-black uppercase tracking-wider text-gray-500 mb-2">Enterprise</h3>
+            <div class="text-4xl font-black mb-6">Custom</div>
+            <ul class="text-sm font-medium text-gray-600 space-y-3 mb-8 flex-grow">
+                <li>Multiple Academies</li>
+                <li>API Integrations</li>
+                <li>Custom Branding</li>
+                <li>Dedicated Manager</li>
+            </ul>
+            <a href="#contact" class="block w-full border-2 border-black text-black py-3 text-sm font-black uppercase tracking-widest hover:bg-black hover:text-white transition">Contact Us</a>
+        </div>
+    </div>
+</section>
+
+<!-- BOTTOM CTA SECTION -->
+<section class="bg-purple-700 text-white py-16 w-full max-w-none m-0 px-4 sm:px-6 lg:px-8 text-center border-t-4 border-black">
+    <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight mb-6">Ready to Professionalize?</h2>
+        <p class="text-lg text-purple-200 font-medium mb-10">Join hundreds of academies already managing their talent the right way.</p>
+        <a href="{% url 'register' %}" class="inline-block bg-black text-white px-10 py-5 text-base font-black uppercase tracking-widest hover:bg-gray-900 transition-all shadow-[6px_6px_0px_0px_rgba(255,255,255,0.3)] hover:shadow-none hover:translate-y-1 hover:translate-x-1">
+            Create Your Account Today
+        </a>
+    </div>
+</section>
 {% endblock %}

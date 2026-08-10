@@ -1,252 +1,137 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In | EA Football Talent</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,900&display=swap" rel="stylesheet">
-    
-    <style>
-        /* --- SKY SPORTS THEME VARIABLES --- */
-        :root {
-            --sky-blue: #06163F;
-            --sky-dark: #020c26;
-            --sky-red: #CD1316;
-            --sky-red-hover: #a00f11;
-            --sky-gray: #f4f4f4;
-            --text-dark: #111;
-            --text-light: #666;
-        }
 
-        * {
-            box-sizing: border-box;
-        }
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-[75vh] px-4 py-12">
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--sky-blue);
-            /* Creates that "Stadium Night" gradient look */
-            background: linear-gradient(135deg, var(--sky-blue) 0%, #000000 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    <!-- Premium Login Card (Sky Sports Aesthetic) -->
+    <div class="w-full max-w-lg bg-white shadow-2xl overflow-hidden border-t-8 border-purple-700 relative group">
 
-        /* --- LOGIN CARD --- */
-        .login-container {
-            width: 100%;
-            max-width: 420px;
-            background: white;
-            position: relative;
-            padding: 0;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            /* Sky Sports uses sharp corners, no border-radius */
-        }
+        <!-- Decorative subtle background element -->
+        <div class="absolute top-0 right-0 w-32 h-32 bg-purple-50 rounded-bl-full -z-10 opacity-50 transition-transform group-hover:scale-110"></div>
 
-        /* Top colored bar decoration */
-        .brand-stripe {
-            height: 6px;
-            width: 100%;
-            background: linear-gradient(90deg, var(--sky-blue) 70%, var(--sky-red) 70%);
-        }
+        <!-- Brand Header Section -->
+        <div class="bg-black p-10 text-center relative overflow-hidden">
+            <!-- Glow effect -->
+            <div class="absolute top-0 right-0 -mr-10 -mt-10 w-32 h-32 rounded-full bg-purple-900 opacity-40 blur-2xl pointer-events-none"></div>
 
-        .login-content {
-            padding: 40px;
-        }
+            <div class="relative z-10 flex flex-col items-center">
+                <img src="{% static 'images/PPS_final.jpg' %}" alt="PPS Logo" class="h-16 w-auto object-contain bg-white rounded-md p-1 mb-4 shadow-lg">
+                <h2 class="text-3xl font-black text-white tracking-widest uppercase italic mb-1">PRO<span class="text-purple-500">TALENT</span></h2>
+                <span class="text-purple-400 text-[0.65rem] font-black tracking-[0.3em] uppercase block">Secure Admin Portal</span>
+            </div>
+        </div>
 
-        /* --- HEADER SECTION --- */
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .logo {
-            display: inline-block;
-            color: var(--sky-blue);
-            font-weight: 900;
-            font-size: 1.2rem;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-
-        .login-header h1 {
-            margin: 0;
-            color: var(--sky-blue);
-            font-size: 2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            line-height: 1;
-        }
-
-        .login-header p {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-top: 10px;
-        }
-
-        /* --- FORM STYLING --- */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 700;
-            color: var(--sky-blue);
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        /* Styling Django Input Fields */
-        .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            background-color: var(--sky-gray);
-            outline: none;
-            transition: border-color 0.3s;
-            color: var(--text-dark);
-            /* Sharp edges */
-            border-radius: 0; 
-        }
-
-        .form-group input:focus {
-            border-color: var(--sky-blue);
-            background-color: white;
-            border-left: 4px solid var(--sky-red); /* Sporty focus effect */
-        }
-
-        /* Error styling */
-        .errorlist {
-            list-style: none;
-            padding: 0;
-            margin: 5px 0 0 0;
-            color: var(--sky-red);
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        /* --- BUTTONS & LINKS --- */
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--sky-red);
-            color: white;
-            border: none;
-            font-size: 1rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background 0.3s;
-            letter-spacing: 0.5px;
-            margin-top: 10px;
-            /* Sharp edges */
-            border-radius: 0;
-        }
-
-        .submit-btn:hover {
-            background-color: var(--sky-red-hover);
-        }
-
-        .forgot-password {
-            display: block;
-            text-align: right;
-            font-size: 0.85rem;
-            color: var(--sky-blue);
-            text-decoration: none;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
-        /* --- FOOTER / SIGNUP --- */
-        .signup-link {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        .signup-link a {
-            color: var(--sky-blue);
-            font-weight: 900;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .signup-link a:hover {
-            text-decoration: underline;
-            color: var(--sky-red);
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 480px) {
-            .login-container {
-                height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-            .brand-stripe {
-                display: none; /* Hide stripe on mobile full screen */
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="login-container">
-        <div class="brand-stripe"></div>
-
-        <div class="login-content">
-            <div class="login-header">
-                <a href="{% url 'home' %}" class="logo">EA Football Talent</a>
-                <h1>Sign In</h1>
-                <p>Access your professional dashboard</p>
+        <!-- Form Section -->
+        <div class="p-8 md:p-12 bg-white relative z-10">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-black text-black uppercase tracking-tight">Sign In</h3>
+                <div class="w-12 h-1.5 bg-purple-600 mx-auto mt-4"></div>
             </div>
 
-            <form method="post" novalidate>
+            <form method="post" id="login-form">
                 {% csrf_token %}
-                
-                {% for field in form %}
-                <div class="form-group">
-                    {{ field.label_tag }}
-                    {{ field }}
-                    
-                    {% if field.errors %}
-                        <ul class="errorlist">
-                            {% for error in field.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
+
+                <!-- Form Errors -->
+                {% if form.non_field_errors %}
+                <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-600 text-red-700 text-sm font-bold">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                <!-- Username Field -->
+                <div class="mb-6">
+                    <label for="{{ form.username.id_for_label }}" class="block font-black uppercase tracking-wider text-sm mb-2 text-gray-800">
+                        {{ form.username.label|default:"Username" }}
+                    </label>
+                    <div class="relative">
+                        {{ form.username }}
+                    </div>
+                    {% if form.username.errors %}
+                    <p class="text-red-600 text-xs mt-1 font-bold">{{ form.username.errors.0 }}</p>
                     {% endif %}
                 </div>
-                {% endfor %}
 
-                <a href="#" class="forgot-password">Forgot your password?</a>
+                <!-- Password Field with Toggle -->
+                <div class="mb-8">
+                    <label for="{{ form.password.id_for_label }}" class="block font-black uppercase tracking-wider text-sm mb-2 text-gray-800">
+                        {{ form.password.label|default:"Password" }}
+                    </label>
+                    <div class="relative flex items-center">
+                        {{ form.password }}
 
-                <button type="submit" class="submit-btn">Sign In</button>
+                        <!-- Toggle Button positioned inside the input container -->
+                        <button type="button" id="toggle-password" class="absolute right-4 text-gray-400 hover:text-purple-700 focus:outline-none transition-colors" aria-label="Toggle password visibility">
+                            <!-- Eye Icon (Visible) -->
+                            <svg id="eye-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            <!-- Eye Slash Icon (Hidden by default) -->
+                            <svg id="eye-slash-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                            </svg>
+                        </button>
+                    </div>
+                    {% if form.password.errors %}
+                    <p class="text-red-600 text-xs mt-1 font-bold">{{ form.password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="w-full py-4 mt-2 bg-purple-700 hover:bg-black text-white font-black text-lg uppercase tracking-widest transition-all duration-300 border-2 border-purple-700 hover:border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] hover:shadow-none hover:translate-y-1 hover:translate-x-1">
+                    Sign In Now
+                </button>
+                <input type="hidden" name="next" value="{% url 'dashboard' %}" />
             </form>
 
-            <div class="signup-link">
-                <p>Don't have an account? <a href="{% url 'register' %}">Join Free</a></p>
+            <div class="mt-10 text-center border-t-2 border-gray-100 pt-8">
+                <p class="text-sm text-gray-500 font-bold uppercase tracking-wide">
+                    Don't have an account?
+                    <br class="mb-4 block">
+                    <a href="{% url 'register' %}" class="text-black hover:text-purple-700 transition-colors border-b-2 border-black hover:border-purple-700 pb-1 inline-flex items-center gap-2 group/link">
+                        Register Here
+                        <svg class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </p>
             </div>
         </div>
     </div>
+</div>
 
-</body>
-</html>
+<!-- Scripts for Password Toggle & Input Styling -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // --- 1. Style Django Inputs ---
+        // We inject the Tailwind classes directly into Django's rendered inputs so they match the theme perfectly.
+        const formInputs = document.querySelectorAll('#login-form input:not([type="hidden"])');
+        formInputs.forEach(input => {
+            input.classList.add('w-full', 'border-2', 'border-black', 'p-4', 'text-lg', 'font-bold', 'bg-white', 'focus:outline-none', 'focus:border-purple-700', 'focus:ring-0', 'transition-colors');
+
+            // Add extra padding to the right of the password field so the text doesn't hide behind the eye icon
+            if(input.type === 'password') {
+                input.classList.add('pr-12');
+            }
+        });
+
+        // --- 2. Password Visibility Toggle ---
+        const toggleBtn = document.getElementById('toggle-password');
+        const eyeIcon = document.getElementById('eye-icon');
+        const eyeSlashIcon = document.getElementById('eye-slash-icon');
+        const passwordInput = document.querySelector('input[name="password"]');
+
+        if (toggleBtn && passwordInput) {
+            toggleBtn.addEventListener('click', () => {
+                // Check current state
+                const isPassword = passwordInput.type === 'password';
+
+                // Toggle the input type
+                passwordInput.type = isPassword ? 'text' : 'password';
+
+                // Toggle the SVG icons
+                eyeIcon.classList.toggle('hidden', isPassword);
+                eyeSlashIcon.classList.toggle('hidden', !isPassword);
+            });
+        }
+    });
+</script>
+{% endblock %}
